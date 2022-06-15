@@ -1,6 +1,5 @@
 package ru.netology.data
 
-import ru.netology.ru.netology.data.Comments
 import ru.netology.ru.netology.data.Copyright
 import ru.netology.ru.netology.data.Likes
 
@@ -17,7 +16,7 @@ open class Post(
     val replyOwnerId: Int,
     val replyPostId: Int,
     val friendsOnly: Int,
-    var comments: Comments?,
+    var comments: Unit,
     var copyright: Copyright?,
     var reposts: Repost?,
     val views: Long,
@@ -35,6 +34,8 @@ open class Post(
     likes: Likes,
 
     ) {
+    fun copy(likes: Likes) {
+    }
 
 
     var likes = likes

@@ -1,5 +1,8 @@
 package ru.netology.service
+import ru.netology.PostNotFoundException
 import ru.netology.data.Post
+import ru.netology.ru.netology.data.Comments
+import ru.netology.ru.netology.data.Likes
 
 
 class WallService(
@@ -10,6 +13,7 @@ class WallService(
     var postArray: Array<Post> = arrayOf(original1, original2, original3)
 
 ) {
+//
 
     init {
         postArray[0] = original1
@@ -19,8 +23,18 @@ class WallService(
     }
 
 
-    var posts = emptyArray<Post>()
+//    var posts = emptyArray<Post>()
+    var posts: Array<Post> = arrayOf(original1, original2, original3)
+    val comm1 = Comments(2, 3, 4092009, "популярный пост", 5, 7)
+    val comm2 = Comments(2, 3, 4092009, "популярный пост", 5, 7)
+    val comm3 = Comments(2, 3, 4092009, "популярный пост", 5, 7)
+
+    var comments: Array<Comments> = arrayOf(comm1, comm2, comm3)
+
     var propertyId = 0
+
+
+
 
     fun add(post: Post): Post {
         propertyId++
@@ -42,13 +56,26 @@ class WallService(
     }
 
 
-//    fun findById(id: Int) {
-//        for ((index, post) in  posts.withIndex())
-//            if (post.id == id) {
-//                posts[index] = post.copy(likes = post.likes + 1)
-//            }
-//        }
+
+
+    fun createComment(postId: Int, comment: Comments): Comments {
+        try {
+            for (post in posts) {
+                println(post.id)
+                if (post.id == postId) {
+                    comments[postId] = comment
+                    println("id совпадает")
+                } else {
+                    throw PostNotFoundException()
+                }
+            }
+        } catch (e : PostNotFoundException) {
+            println("id не совпадает")
+
+        }
+        return comment
+        }
     }
 
-
+private fun <T> Array<T>.copy(likes: Likes) {}
 

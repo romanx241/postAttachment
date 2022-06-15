@@ -1,28 +1,28 @@
 package ru.netology.ru.netology.data
 
+import ru.netology.PostNotFoundException
+
 import ru.netology.data.Post
 import ru.netology.data.Repost
 import ru.netology.domain.Attachment
 
-class Comments (
-    val count: Int,
-    val canPost: Boolean,
-    val groupCanPost: Boolean,
-    val canClose: Boolean,
-    val canOpen: Boolean
-        )
+class Comments(
 
-{
+    var id: Int,   //Идентификатор комментария.
+    val from_id: Int,   //Идентификатор автора комментария.
+    val data: Int,    //Дата создания комментария в формате Unixtime.
+    var text: String,   //Текст комментария.
+    val reply_to_user: Int,   //Идентификатор пользователя или сообщества, в ответ которому оставлен текущий комментарий (если применимо).
+    val reply_to_comment: Int,  //Идентификатор комментария, в ответ на который оставлен текущий (если применимо).
 
-    operator fun plus(any: Any): Comments? { TODO() }
-    operator fun compareTo(i: Int): Int { TODO() }
+) {
 
-
-    constructor() : this(4, true, false, false, true)
+    override fun toString(): String {
+        return ("$id, $from_id, $data, $text, $reply_to_user, $reply_to_comment")
+    }
 }
 
-
-  class Post(
+class Post(
 
       var id: Int,
       val date: Int,
@@ -34,7 +34,7 @@ class Comments (
       val replyOwnerId: Int,
       val replyPostId: Int,
       val friendsOnly: Int,
-      comments: Comments?,
+       comments: Array<Comments>,
       var copyright: Copyright?,
       var reposts: Repost?,
       val views: Long,
@@ -49,18 +49,12 @@ class Comments (
       val postponedId: Int,
       var items: Array<Attachment>,
       var original: Post?,
-      likes : Likes?,
-
+      var likes : Likes?,
+      var original1: Post,
+      var original2: Post,
+      var original3: Post,
+      var posts: Array<Post> = arrayOf(original1, original2, original3)
       ) {
-
-var comments = comments
-    set(value) {
-        if (value!! < 0) {
-            return
-        }
-        field = value
-    }
-    get() = field?.plus((original?.comments ?: 0))
 
 
 
@@ -68,4 +62,30 @@ var comments = comments
     var comments = ((post.comments ?: post) as Comments?)
 
  }
+
+    val comm1 = Comments(2, 3, 4092009, "популярный пост", 5, 7)
+    val comm2 = Comments(2, 3, 4092009, "популярный пост", 5, 7)
+    val comm3 = Comments(2, 3, 4092009, "популярный пост", 5, 7)
+
+   var comments: Array<Comments> = arrayOf(comm1, comm2, comm3)
+
+
+
+    fun createComment(postId: Int, comment: Comments): Comments {
+        try {
+            for (post in posts) {
+                println(post.id)
+                if (post.id == postId) {
+                    comments[postId] = comment
+                    println("id совпадает")
+                } else {
+                    throw PostNotFoundException()
+                }
+            }
+        } catch (e : PostNotFoundException) {
+            println("id не совпадает")
+
+        }
+        return comment
+    }
 }
