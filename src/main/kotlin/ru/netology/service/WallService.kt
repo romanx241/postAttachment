@@ -13,7 +13,7 @@ class WallService(
     var postArray: Array<Post> = arrayOf(original1, original2, original3)
 
 ) {
-//
+
 
     init {
         postArray[0] = original1
@@ -23,7 +23,6 @@ class WallService(
     }
 
 
-//    var posts = emptyArray<Post>()
     var posts: Array<Post> = arrayOf(original1, original2, original3)
     val comm1 = Comments(2, 3, 4092009, "популярный пост", 5, 7)
     val comm2 = Comments(2, 3, 4092009, "популярный пост", 5, 7)
@@ -34,6 +33,7 @@ class WallService(
     var propertyId = 0
 
 
+    private fun <T> Array<T>.copy(likes: Likes) {}
 
 
     fun add(post: Post): Post {
@@ -58,24 +58,28 @@ class WallService(
 
 
 
-    fun createComment(postId: Int, comment: Comments): Comments {
-        try {
-            for (post in posts) {
-                println(post.id)
-                if (post.id == postId) {
-                    comments[postId] = comment
-                    println("id совпадает")
-                } else {
-                    throw PostNotFoundException()
-                }
-            }
-        } catch (e : PostNotFoundException) {
-            println("id не совпадает")
 
-        }
-        return comment
+        fun createComment(posts: Array<Post>, comment: Comments): Comments {
+            var index = 0
+            var flag = true
+                try {
+                    for (post in posts) {
+                        if (post.id == comment.id) {
+                            println("id совпадает")
+                            flag = false
+                            index++
+                            comments[index] = comment
+                        }
+                    }
+                    if(flag) throw PostNotFoundException()
+                } catch (e : PostNotFoundException) {
+                    println("id не совпадает")
+                }
+            return comment
         }
     }
 
-private fun <T> Array<T>.copy(likes: Likes) {}
+
+
+
 

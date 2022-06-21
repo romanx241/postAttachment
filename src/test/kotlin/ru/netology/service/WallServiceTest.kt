@@ -6,26 +6,24 @@ import ru.netology.ru.netology.data.Comments
 
 
 
-class WallServiceTest(var wallService: WallService, var comments: Comments) {
+
+class WallServiceTest(val wallService: WallService, val comment: Comments) {
 
     @Test
 
-    fun shouldThrow(wallService: WallService, comments: Comments): String {
-       val post = wallService.posts[1]
-        val id = post.id
-        val comment = wallService.createComment(id, comments)
-        return comment.toString()
+    fun shouldThrow(wallService: WallService, comment: Comments) {
+       val post = wallService.posts[0]
+        comment.id = post.id
+        wallService.createComment(wallService.posts, comment)
     }
 
     @Test(expected = PostNotFoundException::class)
 
-    fun shouldThrowException(wallService: WallService, comments: Comments): PostNotFoundException {
-        val post = wallService.posts[9]
-        val id = post.id
-        wallService.createComment(id, comments)
-        return PostNotFoundException()
+    fun shouldThrowException(wallService: WallService, comment: Comments) {
+        val post = wallService.posts[0]
+        comment.id = post.id
+        wallService.createComment(wallService.posts, comment)
+        throw PostNotFoundException()
     }
 }
-
-
 

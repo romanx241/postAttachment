@@ -71,21 +71,21 @@ class Post(
 
 
 
-    fun createComment(postId: Int, comment: Comments): Comments {
-        try {
-            for (post in posts) {
-                println(post.id)
-                if (post.id == postId) {
-                    comments[postId] = comment
-                    println("id совпадает")
-                } else {
-                    throw PostNotFoundException()
-                }
-            }
-        } catch (e : PostNotFoundException) {
-            println("id не совпадает")
-
-        }
-        return comment
-    }
+//    fun createComment(postId: Int, comment: Comments): Comments {
+//        try {
+//            for (post in posts) {
+//                println(post.id)
+//                if (post.id == postId) {
+//                    comments[postId] = comment
+//                    println("id совпадает")
+//                } else {
+//                    throw PostNotFoundException()
+//                }
+//            }
+//        } catch (e : PostNotFoundException) {
+//            println("id не совпадает")
+//
+//        }
+//        return comment
+//    }
 }

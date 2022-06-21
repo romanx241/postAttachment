@@ -20,7 +20,7 @@ fun main() {
 
 
     val original1 = Post(
-        id = 0,
+        id = 1,
         date = 4122003,
         ownerId = 1,
         fromId = 1,
@@ -49,7 +49,7 @@ fun main() {
     )
 
     val original2 = Post(
-        id = 0,
+        id = 2,
         date = 4122003,
         ownerId = 6,
         fromId = 7,
@@ -78,7 +78,7 @@ fun main() {
     )
 
     val original3 = Post(
-        id = 1,
+        id = 3,
         date = 4122003,
         ownerId = 5,
         fromId = 2,
@@ -139,8 +139,7 @@ fun main() {
 
 
 
-    val comment = wallService.createComment(0, Comments(2, 3, 4092009, "популярный пост", 5, 7))
-    println(comment.toString())
+    val comment = wallService.createComment(wallService.posts, Comments(3, 3, 4092009, "популярный пост", 5, 7))
 
 }
 
@@ -156,6 +155,7 @@ fun <T> Array() {}
 
 
 
-open class PostNotFoundException() : RuntimeException() {}
+open class PostNotFoundException() : RuntimeException() {
+}
 
 
