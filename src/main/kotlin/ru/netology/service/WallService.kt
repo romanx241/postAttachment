@@ -55,25 +55,22 @@ class WallService(
         return false
     }
 
-
-
-
-
         fun createComment(posts: Array<Post>, comment: Comments): Comments {
-            var index = 0
-            var flag = true
+            var flag = false
                 try {
                     for (post in posts) {
-                        if (post.id == comment.id) {
+                        if (post.id != comment.id) {
+                            flag = true
+                        } else {
                             println("id совпадает")
-                            flag = false
-                            index++
-                            comments[index] = comment
                         }
                     }
-                    if(flag) throw PostNotFoundException()
-                } catch (e : PostNotFoundException) {
-                    println("id не совпадает")
+                    if(flag) {
+                        println("id не совпадает")
+                        throw PostNotFoundException()
+                    }
+                }
+                catch (e : PostNotFoundException) {
                 }
             return comment
         }
