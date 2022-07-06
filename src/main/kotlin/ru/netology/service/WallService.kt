@@ -7,10 +7,10 @@ import ru.netology.ru.netology.data.Likes
 
 class WallService(
 
-    var original1: Post,
     var original2: Post,
     var original3: Post,
-    var postArray: Array<Post> = arrayOf(original1, original2, original3)
+    val original1: Post,
+    var postArray: Array<Post> = arrayOf(original1, original2, original3),
 
 ) {
 
@@ -54,27 +54,26 @@ class WallService(
         }
         return false
     }
+    var countComments: Int = 0
 
-        fun createComment(posts: Array<Post>, comment: Comments): Comments {
-            var flag = false
+        fun createComment(comment: Comments): Boolean {
                 try {
                     for (post in posts) {
-                        if (post.id != comment.id) {
-                            flag = true
-                        } else {
-                            println("id совпадает")
+                        if (post.id == comment.id) {
+                            countComments++
+                            comments[countComments] = comment
+                            return true
                         }
                     }
-                    if(flag) {
-                        println("id не совпадает")
-                        throw PostNotFoundException()
-                    }
+                    throw PostNotFoundException()
                 }
                 catch (e : PostNotFoundException) {
                 }
-            return comment
+            return false
         }
-    }
+}
+
+
 
 
 

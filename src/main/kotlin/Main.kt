@@ -139,8 +139,8 @@ fun main() {
 
 
 
-    val comment = wallService.createComment(wallService.posts, Comments(4, 3, 4092009, "популярный пост", 5, 7))
-    println(comment)
+    val commentBoolean = wallService.createComment(Comments(2, 3, 4092009, "популярный пост", 5, 7))
+    println(commentBoolean)
 
 }
 
